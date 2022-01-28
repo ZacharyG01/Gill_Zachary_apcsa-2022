@@ -15,8 +15,6 @@ public class WordsCompare
 
 	public WordsCompare()
 	{
-		compare = 0;
-		setWords("","");
 	}
 
 	public WordsCompare(String one, String two)
@@ -25,13 +23,11 @@ public class WordsCompare
 
 	public void setWords(String one, String two)
 	{
-		wordOne = one;
-		wordTwo = two;
+
 	}
 
 	public void compare()
 	{
-		compare = wordOne.compareTo(wordTwo);
 	}
 
 	public String toString()
