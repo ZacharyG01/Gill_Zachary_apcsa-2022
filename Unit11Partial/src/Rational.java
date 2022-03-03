@@ -37,8 +37,8 @@ class Rational implements Comparable<Rational>
 	
 	public void add(Rational  other)
 	{
+		numer = (numer * other.den()) + (other.num() * denom);
 		denom = gcd(denom, other.den());
-		numer = numer * other.num();
 		
 		//num1/den1 + num2/den2 
 		//new numerator = (num1 * den2 + num2 * den1)
@@ -52,7 +52,21 @@ class Rational implements Comparable<Rational>
 
 	private void reduce()
 	{
-
+		int reduce = 1;
+		if (numer == denom)
+		{
+			numer = 1;
+			denom = 1;
+		}
+		for (int i = 1; i <= numer && i <= denom; i++)
+		{
+				if (numer % i == 0 && denom % i == 0)
+				{
+					reduce = i;
+				}
+		}
+		numer = numer / reduce;
+		denom = denom / reduce;
 
 
 	}
@@ -99,6 +113,7 @@ class Rational implements Comparable<Rational>
 	//write  toString() method
 	public String toString()
 	{
+		reduce();
 		return numer + "/" + denom;
 	}
 	
