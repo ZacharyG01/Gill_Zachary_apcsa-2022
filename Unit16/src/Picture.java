@@ -361,49 +361,11 @@ public class Picture extends SimplePicture
   }
   
   
-  public void copy2(Picture fromPic, 
-          int startRow, int startCol, int firstrow, int lastrow, int firstcol, int lastcol)
+  
+  public void copy3(Picture fromPic, 
+          int startRow, int startCol, int cropStart, int cropEnd)
 {
-	  int mirrorPoint = lastcol;
-	    Pixel leftPixel = null;
-	    Pixel rightPixel = null;
-	    Pixel[][] pixels = fromPic.getPixels2D();
-	    boolean[][] isCopied = new boolean[pixels.length][pixels[0].length]; 
-	    
-	    // loop through the rows
-	    for (int row = firstrow; row < lastrow; row++)
-	    {
-	      // loop from 13 to just before the mirror point
-	      for (int col = firstcol; col < mirrorPoint; col++)
-	      {
-	        leftPixel = pixels[row][col];      
-	        rightPixel = pixels[row]                       
-	                         [mirrorPoint - col + mirrorPoint];
-	        rightPixel.setColor(leftPixel.getColor());
-	        isCopied[row][col] = true;
-	      }
-	      
-	    }
-	      for (int row = 0; row < pixels.length; row++)
-		    {
-		      // loop from 13 to just before the mirror point
-		      for (int col = 0; col < pixels[0].length; col++)
-		      {
-		        leftPixel = pixels[row][col];      
-		        rightPixel = pixels[row]                       
-		                         [col];
-		        if (!(isCopied[row][col]))
-		        {
-		        	rightPixel.setColor(Color.white);
-		        }
-		      }
-		    }
-	    
-	  
-	  
-	  
-	  
-/*Pixel fromPixel = null;
+Pixel fromPixel = null;
 Pixel toPixel = null;
 Pixel[][] toPixels = this.getPixels2D();
 Pixel[][] fromPixels = fromPic.getPixels2D();
@@ -412,8 +374,8 @@ for (int fromRow = 0, toRow = startRow;
   toRow < toPixels.length; 
   fromRow++, toRow++)
 {
-for (int fromCol = 0, toCol = startCol; 
-    fromCol < fromPixels[0].length &&
+for (int fromCol = cropStart, toCol = startCol; 
+    fromCol < cropEnd &&
     toCol < toPixels[0].length;  
     fromCol++, toCol++)
 {
@@ -421,9 +383,10 @@ for (int fromCol = 0, toCol = startCol;
  toPixel = toPixels[toRow][toCol];
  toPixel.setColor(fromPixel.getColor());
 }
-} 
-*/  
+}   
 }
+  
+  
 
   /** Method to create a collage of several pictures */
   public void createCollage()
@@ -431,12 +394,11 @@ for (int fromCol = 0, toCol = startCol;
     Picture flower1 = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\flower1.jpg");
     Picture flower2 = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\flower2.jpg");
     //this.copy(flower1, 0, 0);
-    this.copy2(flower1,100,0,10,50,10,50);
-    //this.copy(flower2,100, 0);
-    //this.copy(flower1,200,0);
-    //Picture flowerNoBlue = new Picture(flower2);
-    //flowerNoBlue.zeroBlue();
-    //this.copy(flowerNoBlue,300,0);
+    this.copy3(flower1,100,0,10,50);
+    this.copy3(flower2,200, 100, 10, 50);
+    Picture flowerNoBlue = new Picture(flower2);
+    flowerNoBlue.zeroBlue();
+    this.copy3(flowerNoBlue,300,50, 10, 50);
     //this.copy(flower1,400,0);
     //this.copy(flower2,500,0);
     this.mirrorVertical();
