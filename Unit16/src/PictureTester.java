@@ -114,11 +114,11 @@ public class PictureTester
     temple.explore();
   }
   
-  public static void testCopy()
+  public static void testCopy(Picture fromPic, int startRow, int startCol, int cropStart, int cropEnd)
   {
 	  Picture temple = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\seagull.jpg");
 	    temple.explore();
-	    temple.copy2(temple, 10, 10, 10, 300, 10, 300);
+	    temple.copy3(fromPic, startRow, startCol, cropStart, cropEnd);
 	    temple.explore();
   }
   /** Method to test the collage method */
@@ -160,7 +160,7 @@ public class PictureTester
     //testMirrorGull();
     //testMirrorDiagonal();
     //testCollage();
-    testCopy();
+    //testCopy(new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\temple.jpg"), 45, 45, 100, 300);
     //testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
