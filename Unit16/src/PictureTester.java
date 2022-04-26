@@ -25,6 +25,23 @@ public class PictureTester
 	    beach.explore();
   }
   
+  public static void testKeepOnlyGreen()
+  {
+	  Picture beach = new Picture("C:\\\\\\\\Users\\\\\\\\gillz1500\\\\\\\\Desktop\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\Unit16\\\\\\\\src\\\\\\\\images\\\\beach.jpg");
+	    beach.explore();
+	    beach.keepOnlyGreen();
+	    beach.explore();
+  }
+  
+  
+  public static void testKeepOnlyRed()
+  {
+	  Picture beach = new Picture("C:\\\\\\\\Users\\\\\\\\gillz1500\\\\\\\\Desktop\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\Unit16\\\\\\\\src\\\\\\\\images\\\\beach.jpg");
+	    beach.explore();
+	    beach.keepOnlyRed();
+	    beach.explore();
+  }
+  
   public static void testNegate()
   {
 	  Picture beach = new Picture("C:\\\\\\\\Users\\\\\\\\gillz1500\\\\\\\\Desktop\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\Unit16\\\\\\\\src\\\\\\\\images\\\\beach.jpg");
@@ -133,8 +150,17 @@ public class PictureTester
   public static void testEdgeDetection()
   {
     Picture swan = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\swan.jpg");
+    swan.explore();
     swan.edgeDetection(10);
     swan.explore();
+  }
+  
+  public static void testEdgeDetection2()
+  {
+	  Picture swan = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\swan.jpg");
+	    swan.explore();
+	    swan.edgeDetection2(20);
+	    swan.explore();
   }
   
   /** Main method for testing.  Every class can have a main
