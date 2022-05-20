@@ -14,19 +14,20 @@ public class AlienHorde
 {
 	private List<Alien> aliens;
 	private int amount;
+	private int difficulty;
 
-	public AlienHorde(int size)
+	public AlienHorde(int size, int diffic)
 	{
+		difficulty = diffic;
 		amount = size;
 		aliens = new ArrayList<Alien>(size);
 		int diff = 75;
 		int x = 0;
 		int y = 60;
 		int direction = 1;
-		Alien al;
 		for (int i = 0; i < size; i++)
 		{
-			aliens.add(new Alien(x,y,50,50,direction));
+			aliens.add(new Alien(x,y,50,50,direction * difficulty));
 			x+= diff;
 			
 			if (x > 750)
@@ -99,6 +100,7 @@ public class AlienHorde
 		}
 		return false;
 	}
+	
 	
 	public boolean Win()
 	{

@@ -14,8 +14,8 @@ public class StarFighter extends JFrame
 	{
 		super("STARFIGHTER");
 		setSize(WIDTH,HEIGHT);
-		//OuterSpace(# of aliens, digits rounded, ship size, levels)
-		OuterSpace theGame = new OuterSpace(10, 2, 50, 3);
+		//OuterSpace(# of aliens, digits rounded, ship size, levels, difficulty(Normal, Hard, Expert))
+		OuterSpace theGame = new OuterSpace(10, 2, 50, 3, "Expert");
 		((Component)theGame).setFocusable(true);
 
 		getContentPane().add(theGame);

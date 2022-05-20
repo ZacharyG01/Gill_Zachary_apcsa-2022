@@ -39,6 +39,9 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 	private double scale;
 	private int size;
 	public static int level;
+	private Powerup pow;
+	public static boolean removePU;
+	private int diff;
 	public OuterSpace()
 	{
 		setBackground(Color.black);
@@ -57,10 +60,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		//Ammo1 = new Ammo(ship.getX()+20,ship.getY(), 10);
 		ammo = false;
 		shots = new Bullets();
-		horde = new AlienHorde(size);
+		horde = new AlienHorde(size, 1);
 		totalaccuracy = 100;
 		accuracy = 100;
 		scale = Math.pow(10, 2);
+		//pow = new Powerup(300,300, 50, 50);
 
 		this.addKeyListener(this);
 		new Thread(this).start();
@@ -69,8 +73,20 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		
 	}
 	
-	public OuterSpace(int aliens, int digitsscaled, int shipsize, int max)
+	public OuterSpace(int aliens, int digitsscaled, int shipsize, int max, String difficulty)
 	{
+		if (difficulty.equals("Normal") || difficulty.equals("normal"))
+		{
+			diff = 1;
+		}
+		if (difficulty.equals("Hard") || difficulty.equals("hard"))
+		{
+			diff = 2;
+		}
+		if (difficulty.equals("Expert") || difficulty.equals("expert"))
+		{
+			diff = 3;
+		}
 		setBackground(Color.black);
 
 		keys = new boolean[5];
@@ -84,10 +100,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		ship = new Ship(350,500,shipsize,shipsize,10);
 		ammo = false;
 		shots = new Bullets();
-		horde = new AlienHorde(size);
+		horde = new AlienHorde(size, diff);
 		totalaccuracy = 100;
 		accuracy = 100;
 		scale = Math.pow(10, digitsscaled);
+		//pow = new Powerup(300,300, 50, 50);
 
 		this.addKeyListener(this);
 		new Thread(this).start();
@@ -128,13 +145,17 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		//alienOne.draw(graphToBack);
 		//alienTwo.draw(graphToBack);
 		shots.drawEmAll(graphToBack);
+		//if (!removePU)
+		//pow.draw(graphToBack);
+		
+		
 		
 		
 		if (win && !(level > maxLevel))
 		{
 			level++;
 			size += 10;
-			horde = new AlienHorde(size);
+			horde = new AlienHorde(size, diff);
 			win = false;
 			score = 0;
 			Bullets.levelshots = 0;
@@ -192,6 +213,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		
 		shots.cleanEmUp();
 		horde.moveEmAll();
+		//pow.powerUp(ship);
 		if (shots.getList().size() > 0)
 		{
 		horde.removeDeadOnes(shots.getList());
@@ -205,6 +227,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 			//repaint();
 			
 		}
+		
 		
 		if (horde.gameOver(ship))
 		{

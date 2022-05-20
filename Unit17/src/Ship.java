@@ -47,6 +47,22 @@ public class Ship extends MovingThing
 		}
 	}
 
+	
+	public Ship(int x, int y, int w, int h, int s, boolean t)
+	{
+		super(x, y, w, h);
+		speed=s;
+		try
+		{
+			URL url = getClass().getResource("/images/ship2.jpg");
+			image = ImageIO.read(url);
+		}
+		catch(Exception e)
+		{
+			System.out.print(":(");
+			//feel free to do something here
+		}
+	}
 
 	public void setSpeed(int s)
 	{
