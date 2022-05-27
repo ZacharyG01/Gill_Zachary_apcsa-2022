@@ -124,6 +124,301 @@ public class Picture extends SimplePicture
 	    }
   }
   
+   public void encode(Picture messagePict)
+  {
+  Pixel[][] messagePixels = messagePict.getPixels2D();
+  Pixel[][] currPixels = this.getPixels2D();
+  Pixel currPixel = null;
+  Pixel messagePixel = null;
+  int count = 0;
+  int blueRand = (int)(Math.random() * 4 + 2);
+  int redRand = (int)(Math.random() * 4 + 2);
+  int greenRand = (int)(Math.random() * 4 + 2);
+  int r = 0;
+  int c = 0;
+  int redVal = currPixels[r][c].getRed();
+  int greenVal = currPixels[r][c].getGreen();
+  int blueVal = currPixels[r][c].getBlue();
+  int maxrow = 0;
+  int maxc = 0;
+  int maxVal = Integer.MAX_VALUE;
+  int divisor;
+ 
+  //Sets rand variables to different values 2-5
+  while (greenRand == blueRand)
+  {
+	  greenRand = (int)(Math.random()*4 + 2);
+  }
+  while (greenRand == redRand || redRand == blueRand)
+  {
+	  redRand = (int)(Math.random()*4 + 2);
+  }
+  
+  //Encodes the image into current image
+  for (int row = 0; row < this.getHeight(); row++)
+  {
+	  for (int col = 0; col < this.getWidth(); col++)
+	  {
+		  currPixel = currPixels[row][col];
+		  
+		  	messagePixel = messagePixels[row][col];
+		  	//if the message is on that pixel, the RGB values get changed based on the random mods
+		  	if (messagePixel.colorDistance(Color.BLACK) < 60)
+		  	{
+		  		count++;
+		  		while (currPixel.getBlue() % blueRand != 0)
+		  		{
+		  			if (currPixel.getBlue() == 255)
+		  				currPixel.setBlue(currPixel.getBlue() - 1);
+		  			else
+		  				currPixel.setBlue(currPixel.getBlue() + 1);
+		  		}
+		  		while (currPixel.getGreen() % greenRand != 0)
+		  		{
+		  			if (currPixel.getGreen() == 255)
+		  				currPixel.setGreen(currPixel.getGreen() - 1);
+		  			else
+		  				currPixel.setGreen(currPixel.getGreen() + 1);
+		  			
+		  		}
+		  		while (currPixel.getRed() % redRand != 0)
+		  		{
+		  			if (currPixel.getRed() == 255)
+		  				currPixel.setRed(currPixel.getRed() - 1);
+		  			else
+		  				currPixel.setRed(currPixel.getRed() + 1);
+		  		}
+		  			
+		  	}
+		  	
+		  	//if the message is not on that pixel, the RGB values get changed to not equal the random mods
+		  	else
+		  	{
+		  		if (currPixel.getBlue() % blueRand == 0)
+		  		{
+		  			if (currPixel.getBlue() == 255)
+		  				currPixel.setBlue(currPixel.getBlue() - 1);
+		  			else
+		  				currPixel.setBlue(currPixel.getBlue() + 1);
+		  		}
+		  		if (currPixel.getGreen() % greenRand == 0)
+		  		{
+		  			if (currPixel.getGreen() == 255)
+		  				currPixel.setGreen(currPixel.getGreen() - 1);
+		  			else
+		  				currPixel.setGreen(currPixel.getGreen() + 1);
+		  		}
+		  		if (currPixel.getRed() % redRand == 0)
+		  		{
+		  			if (currPixel.getRed() == 255)
+		  				currPixel.setRed(currPixel.getRed() - 1);
+		  			else
+		  				currPixel.setRed(currPixel.getRed() + 1);
+		  		}
+		  	}
+	  }
+  }
+  
+  //Sets the RGB to the count of msg pixels to decode the count later (red * green + blue == count)
+  while (count - (redVal * greenVal) < -255)
+  {
+	  if (redVal > 0 && redVal >= greenVal)
+		  redVal--;
+	  else
+		  greenVal--;
+  }
+  while (count - (redVal * greenVal) > 255)
+  {
+	  if (redVal < 255 && redVal <= greenVal)
+		  redVal++;
+	  else
+		  greenVal++;
+  }
+  
+  while (redVal * greenVal + blueVal != count)
+  {
+	  if (redVal * greenVal + blueVal < count)
+		  blueVal++;
+	  else
+		  blueVal--;
+  }
+  
+  
+  //finds the most similar pixel
+  for (int row = 0; row < this.getHeight(); row++)
+  {
+	  for (int col = 0; col < this.getWidth(); col++)
+	  {
+		  currPixel = currPixels[row][col];
+		  if (Math.abs(currPixel.getBlue() - blueVal) + Math.abs(currPixel.getRed() - redVal) + Math.abs(currPixel.getGreen() - greenVal)  < maxVal )
+		  {
+			  maxrow = row;
+			  maxc = col;
+			  maxVal = Math.abs(currPixel.getBlue() - blueVal) + Math.abs(currPixel.getRed() - redVal) + Math.abs(currPixel.getGreen() - greenVal);
+		  }
+	  }
+  }
+  
+  currPixels[maxrow][maxc].setBlue(blueVal);
+  currPixels[maxrow][maxc].setRed(redVal);
+  currPixels[maxrow][maxc].setGreen(greenVal);
+  
+  
+  //Sets all of the blue values to even or odd based on what the count pixel is
+  for (int row = 0; row < this.getHeight(); row++)
+  {
+	  for (int col = 0; col < this.getWidth(); col++)
+	  {
+		  currPixel = currPixels[row][col];
+		  if (currPixels[maxrow][maxc].getBlue() % 2 == 0)
+		  {
+			  if (currPixel.getBlue() % 2 == 0 && currPixel != currPixels[maxrow][maxc])
+				  currPixel.setBlue(currPixel.getBlue() + 1);
+		  }
+		  else if (currPixel != currPixels[maxrow][maxc])
+			  if (currPixel.getBlue() == 255)
+				  currPixel.setBlue(currPixel.getBlue() - 1);
+			  else if (currPixel.getBlue() % 2 != 0)
+				  currPixel.setBlue(currPixel.getBlue() + 1);
+	  }
+  }
+  
+  
+  System.out.println(count);
+  }
+
+  
+public Picture decode()
+  {
+	  int blueCount = 0;
+	  int blueMod = 1;
+	  int greenCount = 0;
+	  int greenMod = 1;
+	  int redCount = 0;
+	  int redMod = 1;
+	  int evencount = 0;
+	  int oddcount = 0;
+	  int count = 0;
+	  int countr = 0;
+	  int countc = 0;
+	  
+	  Pixel[][] pixels = this.getPixels2D();
+	  int height = this.getHeight();
+	  int width = this.getWidth();
+	  Pixel currPixel = null;
+
+	  Pixel messagePixel = null;
+	  Picture messagePicture = new Picture(height,width);
+	  Pixel[][] messagePixels = messagePicture.getPixels2D();
+	  
+	  //Blue value is decoded and count variable is set to the RGB values of the count pixel
+	  
+	  for (int row = 0; row < this.getHeight(); row++)
+		{
+		  for (int col = 0; col < this.getWidth(); col++)
+		  {
+			  currPixel = pixels[row][col];
+			  if (currPixel.getBlue() % 2 == 0)
+				  evencount++;
+			  else
+				  oddcount++;
+		  }
+		}
+	  
+	  for (int row = 0; row < this.getHeight(); row++)
+		{
+		  for (int col = 0; col < this.getWidth(); col++)
+		  {
+			  currPixel = pixels[row][col];
+			  if (evencount > oddcount)
+			  {
+				  if (currPixel.getBlue() % 2 != 0)
+				  {
+					  countr = row;
+					  countc = col;
+				  }
+					  
+			  }
+			  else
+				  if (currPixel.getBlue() % 2 == 0)
+				  {
+					  countr = row;
+					  countc = col;
+				  }
+		  }
+		}
+	  currPixel = pixels[countr][countc];
+	  count = currPixel.getBlue() + currPixel.getRed() * currPixel.getGreen();
+	  
+	  //determines the random mod based on the count compared to the RGB count
+	  for (int i = 2; i < 6; i++)
+	  {
+	  for (int row = 1; row < this.getHeight(); row++)
+  		{
+		  for (int col = 1; col < this.getWidth(); col++)
+		  {
+			  currPixel = pixels[row][col];
+			  messagePixel = messagePixels[row][col];
+				  if (currPixel.getBlue() % i == 0)
+				  {
+					  blueCount++;
+				  }
+				  if (currPixel.getRed() % i == 0)
+				  {
+					  redCount++;
+				  }
+				  if (currPixel.getGreen() % i == 0)
+				  {
+					  greenCount++;
+				  }
+		  }
+			  
+		  }
+	  if (blueCount == count)
+		  blueMod = i;
+	  if (redCount == count)
+		  redMod = i;
+	  if (greenCount == count)
+		  greenMod = i;
+	  redCount = 0;
+	  blueCount = 0;
+	  greenCount = 0;
+  		}
+	  
+	  
+	  
+	  //sets the image to show the message
+	  for (int row = 1; row < this.getHeight(); row++)
+  		{
+		  for (int col = 1; col < this.getWidth(); col++)
+		  {
+			  currPixel = pixels[row][col];
+			  messagePixel = messagePixels[row][col];
+				  if (currPixel.getBlue() % blueMod == 0 && currPixel.getRed() % redMod == 0 && currPixel.getGreen() % greenMod == 0)
+				  {
+					  messagePixel.setColor(Color.BLACK);
+				  }
+		  }
+			  
+		  }
+	  
+	  
+	  
+  System.out.println("Total count : " + count);
+  System.out.println("Count pixel row : " + countr);
+  System.out.println("Count pixel col : " + countc);
+  System.out.println("Red mod : " +redMod);
+  System.out.println("Green mod : " + greenMod);
+  return messagePicture;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   public void negate()
   {
 	  Pixel[][] pixels = this.getPixels2D();
