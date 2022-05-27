@@ -162,6 +162,19 @@ public class PictureTester
 	    swan.edgeDetection2(20);
 	    swan.explore();
   }
+
+	
+public static void testEncode()
+{
+	Picture beach = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\beach.jpg");
+	Picture msg = new Picture("C:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\gillz1500\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Gill_Zachary_apcsa-2022\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unit16\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\src\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\images\\\\\\\\\\\\\\\\msg.jpg");
+	beach.explore();
+	beach.encode(msg);
+	beach.explore();
+	Picture dec = new Picture(beach.decode());
+	dec.explore();
+	
+}
   
   /** Main method for testing.  Every class can have a main
     * method in Java */
@@ -170,6 +183,7 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
+	  testEncode();
     //testZeroBlue();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
